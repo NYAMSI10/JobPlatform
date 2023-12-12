@@ -8,10 +8,12 @@ import {UserController} from "./user/user.controller";
 import {UserService} from "./user/user.service";
 import { HelpersService } from './helpers/helpers.service';
 import { HelpersModule } from './helpers/helpers.module';
+import { AuthuserModule } from './authuser/authuser.module';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
-  imports: [DatabaseModule, ContratModule, UserModule, HelpersModule],
+  imports: [DatabaseModule, ContratModule, UserModule, HelpersModule, AuthuserModule, ConfigModule.forRoot()],
   controllers: [ContratController,UserController],
-  providers: [ContratService,UserService, HelpersService],
+  providers: [ContratService,UserService, HelpersService, ],
 })
 export class AppModule {}
