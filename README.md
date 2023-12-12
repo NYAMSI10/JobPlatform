@@ -1,5 +1,5 @@
 
 # JobPlaform
-`Angular+Nodejs+Expressjs+Graphql+Prisma+PostgreSql+PayPal
+`Angular+Nodejs+Nestjs+Graphql+Prisma+PostgreSql+PayPal
 `
 

@@ -40,11 +40,23 @@ export class UserService {
 
   }
 
-  update(id: number, updateUserDto: Prisma.UserUpdateInput) {
-    return `This action updates a #${id} user`;
+ async update(id: number, updateUserDto: Prisma.UserUpdateInput) {
+    if (!await this.verified.user(id))
+    {
+      throw new HttpException('User not Found', HttpStatus.NOT_FOUND);
+
+    }
+
+    return this.prisma.user.update({where: {id}, data: updateUserDto})
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(id: number) {
+    if (!await this.verified.user(id))
+    {
+        throw new NotFoundException('User Not Found')
+
+    }
+  return this.prisma.user.delete({where:{id}})
   }
 }

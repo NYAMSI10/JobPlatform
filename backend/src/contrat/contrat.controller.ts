@@ -1,4 +1,17 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Redirect, NotFoundException, Res, Req} from '@nestjs/common';
+import {
+    Controller,
+    Get,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Delete,
+    Redirect,
+    NotFoundException,
+    Res,
+    Req,
+    HttpException, HttpStatus
+} from '@nestjs/common';
 import { ContratService } from './contrat.service';
 import {Prisma} from  '@prisma/client'
 import {Response, Request} from "express";
@@ -46,12 +59,19 @@ export class ContratController {
   @Delete(':id')
   async remove(@Param('id') id: string, @Res() response:Response, @Req() request:Request) {
 
-      const cntart =    await this.contratService.remove(+id);
-
-      return response.status(200).json({
-          status: "ok!",
-          message:"Contrat delete"
-      })
-
+      try {
+          await this.contratService.remove(+id)
+          return response.status(200).json({
+              status: "ok!",
+              message:"Contrat delete"
+          })
+      } catch (error) {
+          throw new HttpException({
+              status: HttpStatus.FORBIDDEN,
+              error: 'Contrat Not Found',
+          }, HttpStatus.FORBIDDEN, {
+              cause: error
+          });
+      }
   }
 }
