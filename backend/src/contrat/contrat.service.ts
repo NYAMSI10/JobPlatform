@@ -1,12 +1,20 @@
 import {Injectable, NotFoundException} from '@nestjs/common';
 import {DatabaseService} from "../database/database.service";
 import {Prisma} from "@prisma/client";
+import {HelpersService} from "../helpers/helpers.service";
 
 @Injectable()
 export class ContratService {
-  constructor( private  readonly  prisma: DatabaseService) {
+  constructor( private  readonly  prisma: DatabaseService, private readonly  verified: HelpersService) {
   }
   async create(createContrat: Prisma.ContratCreateInput) {
+
+    if (await this.verified.uniquecontrat(createContrat.name))
+    {
+      throw new NotFoundException('Contrat existe already')
+
+    }
+
     return this.prisma.contrat.create({data : createContrat});
   }
 

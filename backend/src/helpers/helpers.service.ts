@@ -11,6 +11,11 @@ export class HelpersService {
         const  user= await this.prisma.user.findUnique({where:{email}})
         return user
     }
+    async uniquecontrat(name: string) {
+
+        const  user= await this.prisma.contrat.findFirst({where:{name:name}})
+        return user
+    }
 
     async user(id: number){
         const  user= await this.prisma.user.findUnique({where:{id}})

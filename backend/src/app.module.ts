@@ -10,9 +10,10 @@ import { HelpersService } from './helpers/helpers.service';
 import { HelpersModule } from './helpers/helpers.module';
 import { AuthuserModule } from './authuser/authuser.module';
 import { ConfigModule } from '@nestjs/config';
+import { RoleModule } from './role/role.module';
 
 @Module({
-  imports: [DatabaseModule, ContratModule, UserModule, HelpersModule, AuthuserModule, ConfigModule.forRoot()],
+  imports: [DatabaseModule, ContratModule, UserModule, HelpersModule, AuthuserModule, ConfigModule.forRoot(), RoleModule],
   controllers: [ContratController,UserController],
   providers: [ContratService,UserService, HelpersService, ],
 })

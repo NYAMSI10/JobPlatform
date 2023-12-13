@@ -1,7 +1,24 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, Res, Req, HttpStatus, HttpException} from '@nestjs/common';
-import { UserService } from './user.service';
-import {Prisma} from  '@prisma/client'
-import {Request, Response, response} from "express";
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  HttpException,
+  HttpStatus,
+  Param,
+  Patch,
+  Post,
+  Req,
+  Res,
+  UseGuards
+} from '@nestjs/common';
+import {UserService} from './user.service';
+import {Prisma} from '@prisma/client'
+import {Request, Response} from "express";
+import {Roles} from "../role/role.decorator";
+import {Role} from "../role/role.enum";
+import {AuthuserGuard} from "../authuser/authuser.guard";
+import {RoleGuard} from "../role/role.guard";
 
 @Controller('user')
 export class UserController {
@@ -11,17 +28,21 @@ export class UserController {
   create(@Body() createUserDto: Prisma.UserCreateInput) {
     return this.userService.create(createUserDto);
   }
-
+  @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
+  @UseGuards(AuthuserGuard,RoleGuard)
   @Get()
   findAll() {
     return this.userService.findAll();
   }
-
+// JEAN CHARLES
+  @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
+  @UseGuards(AuthuserGuard,RoleGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
-
+  @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
+  @UseGuards(AuthuserGuard,RoleGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: Prisma.UserUpdateInput) {
     return this.userService.update(+id, updateUserDto);

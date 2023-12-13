@@ -1,6 +1,8 @@
-import {Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res} from '@nestjs/common';
+import {Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards} from '@nestjs/common';
 import {AuthuserService} from "./authuser.service";
 import {Prisma} from "@prisma/client";
+import {AuthuserGuard} from "./authuser.guard";
+import {Request} from "express";
 
 @Controller('authuser')
 export class AuthuserController {
@@ -13,7 +15,7 @@ export class AuthuserController {
     {
         return this.authService.loginuser(dataUser, req,res)
     }
-
+    @UseGuards(AuthuserGuard)
     @Get('info')
     async user(@Req() req){
         return this.authService.user(req)
@@ -24,6 +26,8 @@ export class AuthuserController {
         return this.authService.logout(req,res)
 
     }
+
+
 
 
 
