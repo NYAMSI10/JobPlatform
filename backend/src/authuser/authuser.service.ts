@@ -5,6 +5,7 @@ import {HelpersService} from "../helpers/helpers.service";
 import * as bcrypt from 'bcrypt';
 import {ConfigService} from "@nestjs/config";
 import {JwtService} from "@nestjs/jwt";
+import {request, Request, Response} from "express";
 
 @Injectable()
 export class AuthuserService {
@@ -12,7 +13,7 @@ export class AuthuserService {
     constructor(private readonly prisma: DatabaseService, private readonly verified: HelpersService,
          private configService: ConfigService, private jwtService: JwtService) {}
 
-    async loginuser(dataUser: Prisma.UserCreateInput){
+    async loginuser(dataUser: Prisma.UserCreateInput, req: Request, res: Response){
 
         const user = await this.prisma.user.findUnique({where:{email: dataUser.email}})
 
@@ -27,12 +28,10 @@ export class AuthuserService {
          if (user && isMatch)
          {
              const payload = { userId: user.id, email: user.email , role: user.role};
+              const token = await  this.jwtService.signAsync(payload)
+             res.cookie('jwt',token, {httpOnly: true})
 
-           return {
-               email: user.email,
-                token: await  this.jwtService.signAsync(payload)
-
-           }
+            return res.send({ message: 'Logged in succefully' })
 
 
 
@@ -42,7 +41,19 @@ export class AuthuserService {
          }
     }
 
+    async user(req: Request){
 
+        const cookie = req.cookies['jwt'];
 
+        const data = await this.jwtService.verifyAsync(cookie)
+
+        return data;
+    }
+
+    async logout(req: Request, res: Response) {
+        res.clearCookie('jwt');
+
+        return res.send({ message: 'Logged out succefully' });
+    }
 
 }
