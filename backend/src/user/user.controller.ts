@@ -19,6 +19,7 @@ import {Roles} from "../role/role.decorator";
 import {Role} from "../role/role.enum";
 import {AuthuserGuard} from "../authuser/authuser.guard";
 import {RoleGuard} from "../role/role.guard";
+import {Public} from "../role/public.decorator";
 
 @Controller('user')
 export class UserController {
@@ -35,8 +36,7 @@ export class UserController {
     return this.userService.findAll();
   }
 // JEAN CHARLES
-  @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
-  @UseGuards(AuthuserGuard,RoleGuard)
+  @Public()
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);

@@ -45,7 +45,13 @@ export class AuthuserService {
 
         const cookie = req.cookies['jwt'];
 
+        if (!cookie)
+        {
+            throw new NotFoundException('Token Not Found')
+        }
         const data = await this.jwtService.verifyAsync(cookie)
+
+
 
         return data;
     }

@@ -2,7 +2,7 @@ import {Body, Controller, Get, HttpCode, HttpStatus, Post, Req, Res, UseGuards} 
 import {AuthuserService} from "./authuser.service";
 import {Prisma} from "@prisma/client";
 import {AuthuserGuard} from "./authuser.guard";
-import {Request} from "express";
+
 
 @Controller('authuser')
 export class AuthuserController {

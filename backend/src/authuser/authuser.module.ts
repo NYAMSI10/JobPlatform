@@ -17,9 +17,6 @@ import {APP_GUARD} from "@nestjs/core";
       })
   ],
   controllers: [AuthuserController],
-  providers: [AuthuserService,HelpersService, ConfigService, {
-      provide: APP_GUARD,
-      useClass: AuthuserGuard,
-  },]
+  providers: [AuthuserService,HelpersService, ConfigService,AuthuserGuard]
 })
 export class AuthuserModule {}
