@@ -22,6 +22,12 @@ export class HelpersService {
         return user
     }
 
+    async job(id: number){
+        const  job= await this.prisma.job.findUnique({where:{id}})
+        return job
+    }
+
+
 
 }
 

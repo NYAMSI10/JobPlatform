@@ -6,6 +6,7 @@ import * as bcrypt from 'bcrypt';
 import {ConfigService} from "@nestjs/config";
 import {JwtService} from "@nestjs/jwt";
 import {request, Request, Response} from "express";
+import {jwtConstants} from "../helpers/constant";
 
 @Injectable()
 export class AuthuserService {
@@ -28,15 +29,16 @@ export class AuthuserService {
          if (user && isMatch)
          {
              const payload = { userId: user.id, email: user.email , role: user.role};
-              const token = await  this.jwtService.signAsync(payload)
+              const token = this.jwtService.sign(payload, {
+                  secret: jwtConstants.secret,
+                  expiresIn: '1d'
+              })
              res.cookie('jwt',token, {httpOnly: true})
 
             return res.send({ message: 'Logged in succefully' })
 
-
-
          }else {
-             throw new UnauthorizedException();
+             throw new NotFoundException('Password Not correct')
 
          }
     }
@@ -45,11 +47,15 @@ export class AuthuserService {
 
         const cookie = req.cookies['jwt'];
 
+
         if (!cookie)
         {
             throw new NotFoundException('Token Not Found')
         }
-        const data = await this.jwtService.verifyAsync(cookie)
+
+        const data = await this.jwtService.verify(cookie,{
+            secret: jwtConstants.secret,
+        })
 
 
 
