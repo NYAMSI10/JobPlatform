@@ -15,6 +15,6 @@ import { RoleModule } from './role/role.module';
 @Module({
   imports: [DatabaseModule, ContratModule, UserModule, HelpersModule, AuthuserModule, ConfigModule.forRoot(), RoleModule],
   controllers: [ContratController,UserController],
-  providers: [ContratService,UserService, HelpersService, ],
+  providers: [ContratService,UserService, HelpersService ],
 })
 export class AppModule {}
