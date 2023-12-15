@@ -33,10 +33,8 @@ export class AuthuserService {
 
             return res.send({ message: 'Logged in succefully' })
 
-
-
          }else {
-             throw new UnauthorizedException();
+             throw new NotFoundException('Password Not correct')
 
          }
     }

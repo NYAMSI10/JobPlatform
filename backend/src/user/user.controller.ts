@@ -2,7 +2,7 @@ import {
   Body,
   Controller,
   Delete,
-  Get,
+  Get, HttpCode,
   HttpException,
   HttpStatus,
   Param,
@@ -17,8 +17,10 @@ import {Prisma} from '@prisma/client'
 import {Request, Response} from "express";
 import {Roles} from "../role/role.decorator";
 import {Role} from "../role/role.enum";
-import {AuthuserGuard} from "../authuser/authuser.guard";
 import {RoleGuard} from "../role/role.guard";
+import {SkipAuth} from "../role/public.decorator";
+import {AuthuserService} from "../authuser/authuser.service";
+import {AuthGuard} from "../authuser/auth.guard";
 
 @Controller('user')
 export class UserController {
@@ -28,21 +30,19 @@ export class UserController {
   create(@Body() createUserDto: Prisma.UserCreateInput) {
     return this.userService.create(createUserDto);
   }
-  @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
-  @UseGuards(AuthuserGuard,RoleGuard)
   @Get()
   findAll() {
     return this.userService.findAll();
   }
 // JEAN CHARLES
   @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
-  @UseGuards(AuthuserGuard,RoleGuard)
+  @UseGuards(RoleGuard,AuthGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
   @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
-  @UseGuards(AuthuserGuard,RoleGuard)
+  @UseGuards(RoleGuard,AuthGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: Prisma.UserUpdateInput) {
     return this.userService.update(+id, updateUserDto);
@@ -65,4 +65,6 @@ export class UserController {
       });
     }
   }
+
+
 }

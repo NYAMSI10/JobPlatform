@@ -12,7 +12,7 @@ import {Reflector} from "@nestjs/core";
 
 // @ts-ignore
 @Injectable()
-export class AuthuserGuard implements CanActivate {
+export class AuthGuard implements CanActivate {
   constructor(private jwtService: JwtService, private reflector: Reflector) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -24,7 +24,6 @@ export class AuthuserGuard implements CanActivate {
     if (isPublic) {
       return true;
     }
-
     const request = context.switchToHttp().getRequest();
     const token = this.extractTokenFromHeader(request);
     if (!token) {

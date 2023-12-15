@@ -8,13 +8,17 @@ import {UserController} from "./user/user.controller";
 import {UserService} from "./user/user.service";
 import { HelpersService } from './helpers/helpers.service';
 import { HelpersModule } from './helpers/helpers.module';
-import { AuthuserModule } from './authuser/authuser.module';
 import { ConfigModule } from '@nestjs/config';
 import { RoleModule } from './role/role.module';
 
+import {JwtModule} from "@nestjs/jwt";
+import {AuthuserController} from "./authuser/authuser.controller";
+import {AuthGuard} from "./authuser/auth.guard";
+import {AuthuserService} from "./authuser/authuser.service";
+
 @Module({
-  imports: [DatabaseModule, ContratModule, UserModule, HelpersModule, AuthuserModule, ConfigModule.forRoot(), RoleModule],
-  controllers: [ContratController,UserController],
-  providers: [ContratService,UserService, HelpersService, ],
+  imports: [JwtModule,DatabaseModule, ContratModule, UserModule, HelpersModule,  ConfigModule.forRoot(), RoleModule],
+  controllers: [ContratController,UserController,AuthuserController],
+  providers: [ContratService,UserService, HelpersService,AuthGuard,AuthuserService],
 })
 export class AppModule {}

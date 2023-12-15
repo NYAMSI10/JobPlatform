@@ -15,10 +15,11 @@ import {
 import {ContratService} from './contrat.service';
 import {Prisma} from '@prisma/client'
 import {Request, Response} from "express";
-import {AuthuserGuard} from "../authuser/authuser.guard";
 import {Roles} from "../role/role.decorator";
 import {Role} from "../role/role.enum";
 import {RoleGuard} from "../role/role.guard";
+import {SkipAuth} from "../role/public.decorator";
+import {AuthGuard} from "../authuser/auth.guard";
 
 @Controller('contrat/')
 export class ContratController {
@@ -26,7 +27,7 @@ export class ContratController {
     }
 
     @Roles(Role.ADMIN)
-    @UseGuards(AuthuserGuard, RoleGuard)
+    @UseGuards( RoleGuard,AuthGuard)
     @Post()
     async create(@Body() createContratDto: Prisma.ContratCreateInput, @Res() response: Response, @Req() request: Request) {
 
@@ -38,8 +39,8 @@ export class ContratController {
 
     }
 
-    @Roles(Role.ADMIN)
-    @UseGuards(AuthuserGuard, RoleGuard)
+    //@Roles(Role.ADMIN)
+    @UseGuards(AuthGuard)
     @Get()
     async findAll() {
 
@@ -47,8 +48,6 @@ export class ContratController {
 
 
     }
-    @Roles(Role.ADMIN)
-    @UseGuards(AuthuserGuard,RoleGuard)
     @Get(':id')
     async findOne(@Param('id') id: string) {
 
@@ -57,7 +56,7 @@ export class ContratController {
 
     }
     @Roles(Role.ADMIN)
-    @UseGuards(AuthuserGuard,RoleGuard)
+    @UseGuards(RoleGuard,AuthGuard)
     @Patch(':id')
     async update(@Param('id') id: string, @Body() updateContratDto: Prisma.ContratUpdateInput) {
 
@@ -67,7 +66,7 @@ export class ContratController {
 
     }
     @Roles(Role.ADMIN)
-    @UseGuards(AuthuserGuard,RoleGuard)
+    @UseGuards(RoleGuard,AuthGuard)
     @Delete(':id')
     async remove(@Param('id') id: string, @Res() response: Response, @Req() request: Request) {
 

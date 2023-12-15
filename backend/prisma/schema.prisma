@@ -13,6 +13,7 @@ datasource db {
 model Contrat {
   id        Int      @id @default(autoincrement())
   name      String
+  job       Job[]
   createdAt DateTime @default(now()) @map("created_at")
   updateAt  DateTime @updatedAt @map("update_at")
 }
@@ -26,12 +27,41 @@ model User {
   adresse    String?
   codepostal String?
   ville      String?
-  role       Role
+  role       Role     @default(USER)
+  job        Job[]
   createdAt  DateTime @default(now()) @map("created_at")
   updateAt   DateTime @updatedAt @map("update_at")
+}
+
+model Job {
+  id          Int      @id @default(autoincrement())
+  title       String   @db.VarChar(255)
+  time        String
+  city        String
+  salaire     String?
+  telework    Telework @default(no)
+  experience  String?  @default(">6mois")
+  education   String?
+  description String   @db.Text
+  profil      String   @db.Text
+  procedure   String   @db.Text
+  hours       DateTime @db.Time()
+  userId      Int
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  contratId   Int
+  contrat     Contrat  @relation(fields: [contratId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  createdAt   DateTime @default(now()) @map("created_at")
+  updateAt    DateTime @updatedAt @map("update_at")
 }
 
 enum Role {
   USER
   ADMIN
+  COMPANY
+}
+
+enum Telework {
+  frequent
+  occasionally
+  no
 }

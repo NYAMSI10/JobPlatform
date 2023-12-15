@@ -1,7 +1,7 @@
-import { AuthuserGuard } from './authuser.guard';
+import { AuthGuard } from './auth.guard';
 
 describe('AuthuserGuard', () => {
   it('should be defined', () => {
-    expect(new AuthuserGuard()).toBeDefined();
+    expect(new AuthGuard()).toBeDefined();
   });
 });

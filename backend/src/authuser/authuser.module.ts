@@ -5,8 +5,7 @@ import {HelpersService} from "../helpers/helpers.service";
 import {ConfigService} from "@nestjs/config";
 import { JwtModule } from '@nestjs/jwt';
 import {jwtConstants} from "../helpers/constant";
-import {AuthuserGuard} from "./authuser.guard";
-import {APP_GUARD} from "@nestjs/core";
+
 
 @Module({
   imports:[
@@ -17,9 +16,6 @@ import {APP_GUARD} from "@nestjs/core";
       })
   ],
   controllers: [AuthuserController],
-  providers: [AuthuserService,HelpersService, ConfigService, {
-      provide: APP_GUARD,
-      useClass: AuthuserGuard,
-  },]
+  providers: [AuthuserService,HelpersService, ConfigService]
 })
 export class AuthuserModule {}
