@@ -19,30 +19,32 @@ import {Roles} from "../role/role.decorator";
 import {Role} from "../role/role.enum";
 import {RoleGuard} from "../role/role.guard";
 import {SkipAuth} from "../role/public.decorator";
-import {AuthuserService} from "../authuser/authuser.service";
-import {AuthGuard} from "../authuser/auth.guard";
+
 
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
+  @SkipAuth()
   @Post()
   create(@Body() createUserDto: Prisma.UserCreateInput) {
     return this.userService.create(createUserDto);
   }
+  @Roles(Role.ADMIN)
+  @UseGuards(RoleGuard)
   @Get()
   findAll() {
     return this.userService.findAll();
   }
 // JEAN CHARLES
   @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
-  @UseGuards(RoleGuard,AuthGuard)
+  @UseGuards(RoleGuard)
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
   @Roles(Role.ADMIN,Role.USER,Role.COMPANY)
-  @UseGuards(RoleGuard,AuthGuard)
+  @UseGuards(RoleGuard)
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUserDto: Prisma.UserUpdateInput) {
     return this.userService.update(+id, updateUserDto);

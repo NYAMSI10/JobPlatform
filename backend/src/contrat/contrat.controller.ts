@@ -27,7 +27,7 @@ export class ContratController {
     }
 
     @Roles(Role.ADMIN)
-    @UseGuards( RoleGuard,AuthGuard)
+    @UseGuards( RoleGuard)
     @Post()
     async create(@Body() createContratDto: Prisma.ContratCreateInput, @Res() response: Response, @Req() request: Request) {
 
@@ -40,7 +40,8 @@ export class ContratController {
     }
 
     //@Roles(Role.ADMIN)
-    @UseGuards(AuthGuard)
+    //@UseGuards(AuthGuard)
+    @SkipAuth()
     @Get()
     async findAll() {
 
@@ -56,7 +57,7 @@ export class ContratController {
 
     }
     @Roles(Role.ADMIN)
-    @UseGuards(RoleGuard,AuthGuard)
+    @UseGuards(RoleGuard)
     @Patch(':id')
     async update(@Param('id') id: string, @Body() updateContratDto: Prisma.ContratUpdateInput) {
 
@@ -66,7 +67,7 @@ export class ContratController {
 
     }
     @Roles(Role.ADMIN)
-    @UseGuards(RoleGuard,AuthGuard)
+    @UseGuards(RoleGuard)
     @Delete(':id')
     async remove(@Param('id') id: string, @Res() response: Response, @Req() request: Request) {
 

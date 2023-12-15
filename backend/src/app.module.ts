@@ -15,10 +15,14 @@ import {JwtModule} from "@nestjs/jwt";
 import {AuthuserController} from "./authuser/authuser.controller";
 import {AuthGuard} from "./authuser/auth.guard";
 import {AuthuserService} from "./authuser/authuser.service";
+import {APP_GUARD} from "@nestjs/core";
 
 @Module({
   imports: [JwtModule,DatabaseModule, ContratModule, UserModule, HelpersModule,  ConfigModule.forRoot(), RoleModule],
   controllers: [ContratController,UserController,AuthuserController],
-  providers: [ContratService,UserService, HelpersService,AuthGuard,AuthuserService],
+  providers: [ContratService,UserService, HelpersService,AuthuserService,  {
+    provide: APP_GUARD,
+    useClass: AuthGuard,
+  },],
 })
 export class AppModule {}

@@ -3,7 +3,7 @@ import { AuthuserController } from './authuser.controller';
 import { AuthuserService } from './authuser.service';
 import {HelpersService} from "../helpers/helpers.service";
 import {ConfigService} from "@nestjs/config";
-import { JwtModule } from '@nestjs/jwt';
+import {JwtModule, JwtService} from '@nestjs/jwt';
 import {jwtConstants} from "../helpers/constant";
 
 
@@ -16,6 +16,6 @@ import {jwtConstants} from "../helpers/constant";
       })
   ],
   controllers: [AuthuserController],
-  providers: [AuthuserService,HelpersService, ConfigService]
+  providers: [AuthuserService,HelpersService, ConfigService,JwtService]
 })
 export class AuthuserModule {}
