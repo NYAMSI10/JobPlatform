@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import {RouterLink, RouterLinkActive, RouterOutlet} from '@angular/router';
 import {FooterComponent} from "./pages/footer/footer.component";
 import {HeaderComponent} from "./pages/header/header.component";
+import {HttpClientModule} from "@angular/common/http";
 
 @Component({
   selector: 'app-root',

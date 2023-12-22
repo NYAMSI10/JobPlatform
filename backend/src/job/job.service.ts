@@ -24,7 +24,13 @@ export class JobService {
 
     findAll() {
 
-        return this.prisma.job.findMany()
+        return this.prisma.job.findMany({
+            include: {
+                user: true,
+                contrat: true,
+            }
+
+        })
 
     }
 

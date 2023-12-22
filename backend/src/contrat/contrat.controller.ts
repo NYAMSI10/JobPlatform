@@ -33,14 +33,13 @@ export class ContratController {
 
         const contrat = await this.contratService.create(createContratDto);
         return response.status(200).json({
-            message: "contrat add",
+            message: "apicontrat add",
             result: contrat
         })
 
     }
 
-    //@Roles(Role.ADMIN)
-    //@UseGuards(AuthGuard)
+
     @SkipAuth()
     @Get()
     async findAll() {
@@ -49,6 +48,8 @@ export class ContratController {
 
 
     }
+    @Roles(Role.ADMIN)
+    @UseGuards(AuthGuard)
     @Get(':id')
     async findOne(@Param('id') id: string) {
 

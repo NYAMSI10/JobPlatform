@@ -1,0 +1,24 @@
+<div class="max-w-sm overflow-hidden shadow-lg  ">
+  <a class="cursor-pointer " [routerLink]="['home']">
+  <figure><img src="https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg" alt="Shoes"/></figure>
+  <div class="h-56">
+    <div class="flex mt-5 px-8 ">
+      <div><img src="assets/Capture%20d’écran%20du%202023-11-11%2010-40-41.png" width="70" height="100"></div>
+      <div class="ml-2">{{ company | uppercase }}</div>
+    </div>
+    <div class="px-6 py-6 h-2">
+      <div class="font-bold text-xl mb-2">{{ title }}</div>
+    </div>
+    <div class="mt-11 ml-5">
+      {{ city }}
+    </div>
+    <div class="px-6 pt-4 pb-2">
+      <span class="inline-block bg-gray-200  px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{contrat}}</span>
+      @if (salaire){
+        <span class="inline-block bg-gray-200  px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">{{ salaire }}</span>
+
+      }
+    </div>
+  </div>
+  </a>
+</div>

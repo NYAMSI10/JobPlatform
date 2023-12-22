@@ -1,1 +1,63 @@
-<p>job works!</p>
+<div class=" hidden sm:justify-center sm:flex sm:justify-center  mt-20 ">
+  <div><input type="text" [ngModel]="jobFilter" (ngModelChange)="jobFilter = $event"
+              class="border-2 border-gray-500 w-96 focus:border-blue-400 cursor-pointer"
+              placeholder="Recherchez par poste ou par ville"></div>
+
+  <div><select class=" border-2 border-gray-500 focus:border-blue-400 cursor-pointer">
+    <option disabled selected>Ville</option>
+    <option>Game of Thrones</option>
+    <option>Lost</option>
+    <option>Breaking Bad</option>
+    <option>Walking Dead</option>
+  </select></div>
+
+  <div><select class=" border-2 border-gray-500 focus:border-blue-400 cursor-pointer">
+    <option disabled selected>Type de job</option>
+    @for (cont of contrats;track cont.id) {
+      <option value="{{cont.name}}">{{ cont.name }}</option>
+    }
+  </select></div>
+
+</div>
+
+<div class=" flex flex-col  mt-20 ml-3 sm:hidden">
+  <div><input type="text"
+              class="border-2 border-gray-500 w-80 focus:border-blue-400 " placeholder="Recherchez par poste"></div>
+  <br>
+  <div><select class=" border-2 border-gray-500 focus:border-blue-400 cursor-pointer w-80  ">
+    <option disabled selected>Ville</option>
+    <option>Game of Thrones</option>
+    <option>Lost</option>
+    <option>Breaking Bad</option>
+    <option>Walking Dead</option>
+  </select></div>
+  <br>
+
+  <div><select class=" border-2 border-gray-500 focus:border-blue-400 cursor-pointer w-80  ">
+    <option disabled selected>Type de job</option>
+    @for (cont of contrats;track cont.id) {
+      <option value="{{cont.name}}">{{ cont.name }}</option>
+    }
+  </select></div>
+
+</div>
+
+  @if (filteredJobs.length > 0) {<div class="grid grid-cols-4 gap-3 mt-20 ml-3 px-28 ">
+
+  @for (job of filteredJobs;track job.id) {
+
+      <app-grid [title]="job.title" [company]="job.user.name" [city]="job.city" [contrat]="job.contrat.name"
+                [salaire]="job.salaire"></app-grid>
+
+    }
+  </div>
+
+  } @else {
+    <div style="margin-left: 35%;margin-top: 10%" >
+      <img src="assets/empty.webp" width="200" height="200">
+     <h1 class="text-black mt-5 ml-5">Aucun Job Trouvé</h1>
+    </div>
+
+  }
+
+
